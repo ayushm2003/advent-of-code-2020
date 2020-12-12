@@ -1,3 +1,5 @@
+from operator import xor
+
 file = open("data02.txt", "r").read().split("\n")
 entries = list(file)
 
@@ -12,6 +14,9 @@ for entry in entries:
 	character = parts[1][0]
 	string = parts[2]
 
+	####### PART 1 ########
+
+	'''
 	k = 0
 
 	for char in string:
@@ -20,6 +25,16 @@ for entry in entries:
 	
 	if k >= lower and k <= higher:
 		c += 1
+	'''
 
+	####### PART 2 #######
+	flag1 = False
+	flag2 = False
+
+	if string[lower-1] == character: flag1 = True
+	if string[higher-1] == character: flag2 = True
+
+	if xor(flag1, flag2):
+		c += 1
 
 print(c)
