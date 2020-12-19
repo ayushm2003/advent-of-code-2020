@@ -5,47 +5,38 @@ DOWN = 1
 TREE = "#"
 c = 0
 
-def check(n):
+def check(n, length):
 	a = 0
-	while n > 31:
-		n -= 31
+	while n > length:
+		n -= length
 		a += 1
 	
 	return a
 
-with open("trial_data.txt", "r") as f:
+with open("data03.txt", "r") as f:
 
-	#read = f.readlines()
-	#print(read)
+	entries = f.readlines()
+	line = 0
 	t = 4
-	l = 31
 
-	r = f.readline()
-	print(len(r))
-	print(f.tell())
-	#print(r)
-	while r != "":
-		if t > 32:
-			print("##########################")
-			print(len(r))
-			print(t)
-			n = check(len(r))
-			i = r * (n+1)
-			print(r)
-			print(t)
-			d = i[:t]
-			print(d)
-			print("##########################")
-		else:
-			d = f.readline(t)
-			d = str(d)
+	for entry in entries:
+		line += 1
+
+		if line == 1:
+			continue
+
+		length = len(entry)
+
+		if t > len(entry):
+			#print("t = " + str(t))
+			entry = entry[:-1] * (check(t, len(entry[:-1])) + 1)
+			#print(entry)
 		
-		if len(d) > 0 and d[len(d) - 1] == TREE:
+		d = entry[:t]
+		#print(d)
+		if d[len(d) - 1] == TREE:
 			c += 1
-		print(d)
-		t += RIGHT
 
-		r = f.readline()
-		print(f.tell())
+		t += 3
 
-print(c)
+print("c =" + str(c))
