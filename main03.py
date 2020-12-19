@@ -1,9 +1,10 @@
 # 3 steps Right, 1 Down
+'''
 RIGHT = 3
 DOWN = 1
-
+'''
 TREE = "#"
-c = 0
+#c = 0
 
 def check(n, length):
 	a = 0
@@ -13,30 +14,37 @@ def check(n, length):
 	
 	return a
 
-with open("data03.txt", "r") as f:
+def trees(RIGHT, DOWN):
+	c = 0
+	with open("trial_data.txt", "r") as f:
 
-	entries = f.readlines()
-	line = 0
-	t = 4
+		entries = f.readlines()
+		line = 0
+		t = 1 + RIGHT
+		skip = 0
 
-	for entry in entries:
-		line += 1
+		for entry in entries:
+			line += 1
 
-		if line == 1:
-			continue
+			if skip < DOWN:
+				skip += 1
+				continue
 
-		length = len(entry)
+			length = len(entry)
 
-		if t > len(entry):
-			#print("t = " + str(t))
-			entry = entry[:-1] * (check(t, len(entry[:-1])) + 1)
-			#print(entry)
-		
-		d = entry[:t]
-		#print(d)
-		if d[len(d) - 1] == TREE:
-			c += 1
+			if t > len(entry):
+				#print("t = " + str(t))
+				entry = entry[:-1] * (check(t, len(entry[:-1])) + 1)
+				#print(entry)
+			
+			d = entry[:t]
+			#print(d)
+			if d[len(d) - 1] == TREE:
+				c += 1
 
-		t += 3
+			t += RIGHT
+			skip = 1
+	
+	return c
 
-print("c =" + str(c))
+print("c =" + str(trees(7, 1)))
