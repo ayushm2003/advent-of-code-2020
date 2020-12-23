@@ -1,5 +1,7 @@
+
 class Boarding:
 	seats = []
+
 	def __init__(self, rows, columns):
 		self.rows = rows
 		self.columns = columns
@@ -31,47 +33,23 @@ class Boarding:
 
 
 def main():
-	#plane = Boarding(128, 8)
+	plane = Boarding(128, 8)
 	#plane.new()
 
 	with open("trial_data.txt", "r") as f:
-
 		patterns = f.readline()
+
 		while patterns != "":
-			plane = Boarding(128, 8)
-			print(patterns)
 			plane.new()
+
 			for pattern in patterns:
-				#print(pattern)
 				if pattern == "F" or pattern == "B":
 					plane.delete("row", pattern)
-					#print(plane.seats)
-					#print()
 				else:
 					plane.delete("column", pattern)
 
-			print()
 			print(plane.seats)
-			plane.seats = []
-			print(plane.seats)
+			plane.seats.clear()
 			patterns = f.readline()
 
-	'''
-	seats = plane.seats
-	print(seats)
-
-	plane.delete("row", "B")
-	plane.delete("row", "F")
-	plane.delete("row", "F")
-	plane.delete("row", "F")
-	plane.delete("row", "B")
-	plane.delete("row", "B")
-	plane.delete("row", "F")
-
-	print()
-	print()
-	print()
-	for seat in plane.seats:
-		print(seat)
-	'''
 main()
