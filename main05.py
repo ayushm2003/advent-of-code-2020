@@ -1,6 +1,7 @@
 
 class Boarding:
 	seats = []
+	highest_ID = 0
 
 	def __init__(self, rows, columns):
 		self.rows = rows
@@ -13,7 +14,6 @@ class Boarding:
 			for j in range(self.columns):
 				n.append(str(i) + "  " + str(j))
 			self.seats.append(n)
-			#x = 0
 
 	def delete(self, direction):
 		row_length = len(self.seats)
@@ -30,12 +30,18 @@ class Boarding:
 		elif direction == "R":
 			del self.seats[0][0:mid_column]
 		
+	def seat_ID(self):
+		position = self.seats[0][0].split()
+		ID = (int(position[0]) * 8) + int(position[1])
+		if ID > self.highest_ID:
+			self.highest_ID = ID
+		
 
 
 def main():
 	plane = Boarding(128, 8)
 
-	with open("trial_data.txt", "r") as f:
+	with open("data05.txt", "r") as f:
 		patterns = f.readline()
 
 		while patterns != "":
@@ -44,8 +50,11 @@ def main():
 			for pattern in patterns:
 				plane.delete(pattern)
 
-			print(plane.seats)
+			plane.seat_ID()
+
 			plane.seats.clear()
 			patterns = f.readline()
+
+	print(plane.highest_ID)
 
 main()
