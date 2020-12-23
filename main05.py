@@ -15,26 +15,25 @@ class Boarding:
 			self.seats.append(n)
 			#x = 0
 
-	def delete(self, property, direction):
+	def delete(self, direction):
 		row_length = len(self.seats)
-		#column_length = len(self.seats[0])
-		if property == "row":
-			mid = int(row_length / 2)
-			if direction == "F":
-				del self.seats[mid:(row_length)]
-				#print(self.seats)
-			elif direction == "B":
-				del self.seats[0:mid]
-				'''
-		elif property == "column":
-			mid = int(column_length / 2)
-			if direction == 
-			'''
+		column_length = len(self.seats[0])
+		mid_row = int(row_length / 2)
+		mid_column = int(column_length / 2)
+
+		if direction == "F":
+			del self.seats[mid_row:row_length]
+		elif direction == "B":
+			del self.seats[0:mid_row]
+		elif direction == "L":
+			del self.seats[0][mid_column:column_length]
+		elif direction == "R":
+			del self.seats[0][0:mid_column]
+		
 
 
 def main():
 	plane = Boarding(128, 8)
-	#plane.new()
 
 	with open("trial_data.txt", "r") as f:
 		patterns = f.readline()
@@ -43,10 +42,7 @@ def main():
 			plane.new()
 
 			for pattern in patterns:
-				if pattern == "F" or pattern == "B":
-					plane.delete("row", pattern)
-				else:
-					plane.delete("column", pattern)
+				plane.delete(pattern)
 
 			print(plane.seats)
 			plane.seats.clear()
