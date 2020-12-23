@@ -5,19 +5,17 @@ class Boarding:
 		self.columns = columns
 
 	def new(self):
-		x = 0
 		for i in range(self.rows):
 			n = []
 			
 			for j in range(self.columns):
-				n.append(x)
-				x += 1
+				n.append(str(i) + "  " + str(j))
 			self.seats.append(n)
 			#x = 0
 
 	def delete(self, property, direction):
 		row_length = len(self.seats)
-		column_length = len(self.seats[0])
+		#column_length = len(self.seats[0])
 		if property == "row":
 			mid = int(row_length / 2)
 			if direction == "F":
@@ -32,21 +30,48 @@ class Boarding:
 			'''
 
 
-plane = Boarding(128, 8)
-plane.new()
-seats = plane.seats
-print(seats)
+def main():
+	#plane = Boarding(128, 8)
+	#plane.new()
 
-plane.delete("row", "B")
-plane.delete("row", "F")
-plane.delete("row", "F")
-plane.delete("row", "F")
-plane.delete("row", "B")
-plane.delete("row", "B")
-plane.delete("row", "F")
+	with open("trial_data.txt", "r") as f:
 
-print()
-print()
-print()
-for seat in plane.seats:
-	print(seat)
+		patterns = f.readline()
+		while patterns != "":
+			plane = Boarding(128, 8)
+			print(patterns)
+			plane.new()
+			for pattern in patterns:
+				#print(pattern)
+				if pattern == "F" or pattern == "B":
+					plane.delete("row", pattern)
+					#print(plane.seats)
+					#print()
+				else:
+					plane.delete("column", pattern)
+
+			print()
+			print(plane.seats)
+			plane.seats = []
+			print(plane.seats)
+			patterns = f.readline()
+
+	'''
+	seats = plane.seats
+	print(seats)
+
+	plane.delete("row", "B")
+	plane.delete("row", "F")
+	plane.delete("row", "F")
+	plane.delete("row", "F")
+	plane.delete("row", "B")
+	plane.delete("row", "B")
+	plane.delete("row", "F")
+
+	print()
+	print()
+	print()
+	for seat in plane.seats:
+		print(seat)
+	'''
+main()
